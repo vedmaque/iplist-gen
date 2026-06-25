@@ -9,6 +9,7 @@ build/
 # Test and coverage output
 coverage/
 .vitest/
+.playwright-mcp
 
 # Logs
 logs/
