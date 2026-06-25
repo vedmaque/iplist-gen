@@ -15,7 +15,6 @@ const app = getElement<HTMLElement>("app")
 const pageTitle = getElement<HTMLElement>("page-title")
 const brand = getElement<HTMLElement>("app-brand")
 const fileInput = getElement<HTMLInputElement>("file-input")
-const textInput = getElement<HTMLTextAreaElement>("cidr-input")
 const clearButton = getElement<HTMLButtonElement>("clear-button")
 const downloadBatButton = getElement<HTMLButtonElement>("download-bat")
 const downloadJsonButton = getElement<HTMLButtonElement>("download-json")
@@ -28,9 +27,13 @@ const invalidList = getElement<HTMLUListElement>("invalid-list")
 const fileSummary = getElement<HTMLElement>("file-summary")
 const filePickerLabel = getElement<HTMLElement>("file-picker-label")
 const inputLabel = getElement<HTMLElement>("input-label")
+const uploadHint = getElement<HTMLElement>("upload-hint")
 const fileSummaryLabel = getElement<HTMLElement>("file-summary-label")
 const fileName = getElement<HTMLElement>("file-name")
 const fileSize = getElement<HTMLElement>("file-size")
+const emptyState = getElement<HTMLElement>("empty-state")
+const emptyStateTitle = getElement<HTMLElement>("empty-state-title")
+const emptyStateText = getElement<HTMLElement>("empty-state-text")
 const outputPane = getElement<HTMLElement>("output-pane")
 const reportHeading = getElement<HTMLElement>("report-heading")
 
@@ -48,29 +51,22 @@ fileInput.addEventListener("change", async () => {
   }
 
   loadedFileText = await file.text()
-  textInput.value = ""
   fileName.textContent = file.name
   fileSize.textContent = formatBytes(locale, file.size)
   fileSummary.hidden = false
-  textInput.hidden = true
-  updateReport()
-})
-
-textInput.addEventListener("input", () => {
-  loadedFileText = null
+  emptyState.hidden = true
   updateReport()
 })
 
 clearButton.addEventListener("click", () => {
   fileInput.value = ""
   loadedFileText = null
-  textInput.value = ""
   fileSummary.hidden = true
   fileName.textContent = ""
   fileSize.textContent = ""
-  textInput.hidden = false
+  emptyState.hidden = false
   updateReport()
-  textInput.focus()
+  fileInput.focus()
 })
 
 downloadBatButton.addEventListener("click", () => {
@@ -112,7 +108,7 @@ function updateReport(): void {
 }
 
 function getInputText(): string {
-  return loadedFileText ?? textInput.value
+  return loadedFileText ?? ""
 }
 
 function createInvalidLineItems(invalid: string[]): HTMLLIElement[] {
@@ -145,6 +141,9 @@ function applyLocale(locale: Locale): void {
   filePickerLabel.textContent = strings.filePicker
   clearButton.textContent = strings.clearButton
   inputLabel.textContent = strings.inputLabel
+  uploadHint.textContent = strings.uploadHint
+  emptyStateTitle.textContent = strings.emptyStateTitle
+  emptyStateText.textContent = strings.emptyStateText
   fileSummaryLabel.textContent = strings.fileSummaryLabel
   downloadBatButton.textContent = strings.downloadBat
   downloadJsonButton.textContent = strings.downloadJson

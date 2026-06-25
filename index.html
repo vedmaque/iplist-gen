@@ -20,7 +20,12 @@
 
       <section class="workspace">
         <div class="input-pane">
-          <div class="toolbar">
+          <div class="upload-panel">
+            <div>
+              <p id="input-label" class="field-label"></p>
+              <p id="upload-hint" class="upload-hint"></p>
+            </div>
+
             <label class="file-picker">
               <input
                 id="file-input"
@@ -29,26 +34,24 @@
               />
               <span id="file-picker-label"></span>
             </label>
-            <button id="clear-button" class="secondary" type="button"></button>
           </div>
 
-          <label id="input-label" class="field-label" for="cidr-input"></label>
           <div id="file-summary" class="file-summary" hidden>
             <span id="file-summary-label" class="file-summary__label"></span>
             <strong id="file-name"></strong>
             <span id="file-size"></span>
           </div>
-          <textarea
-            id="cidr-input"
-            spellcheck="false"
-            placeholder="2.58.124.0/22&#10;2.58.212.0/24"
-          ></textarea>
+          <div id="empty-state" class="empty-state">
+            <strong id="empty-state-title"></strong>
+            <span id="empty-state-text"></span>
+          </div>
         </div>
 
         <aside id="output-pane" class="output-pane">
           <div class="actions">
             <button id="download-bat" type="button"></button>
             <button id="download-json" type="button"></button>
+            <button id="clear-button" class="secondary" type="button"></button>
           </div>
 
           <div class="report">

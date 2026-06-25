@@ -1,6 +1,6 @@
 :root {
-  color: #1d2528;
-  background: #f4f0e8;
+  color: #1c2529;
+  background: #f6f8fa;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
@@ -18,14 +18,10 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background:
-    linear-gradient(135deg, rgba(33, 105, 94, 0.12), transparent 40%),
-    linear-gradient(315deg, rgba(178, 88, 58, 0.12), transparent 36%),
-    #f4f0e8;
+  background: #f6f8fa;
 }
 
 button,
-textarea,
 input {
   font: inherit;
 }
@@ -36,7 +32,7 @@ button {
   border-radius: 6px;
   padding: 0 18px;
   color: #fff;
-  background: #21695e;
+  background: #176b73;
   font-weight: 700;
   cursor: pointer;
   transition:
@@ -46,7 +42,7 @@ button {
 }
 
 button:hover:not(:disabled) {
-  background: #174c45;
+  background: #11505a;
   transform: translateY(-1px);
 }
 
@@ -57,17 +53,17 @@ button:disabled {
 
 button.secondary {
   color: #253033;
-  background: #e1d8ca;
+  background: #e5ebef;
 }
 
 button.secondary:hover:not(:disabled) {
-  background: #d4c8b7;
+  background: #d7e0e6;
 }
 
 .shell {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 38px 0;
+  padding: 34px 0;
 }
 
 .hero {
@@ -75,13 +71,13 @@ button.secondary:hover:not(:disabled) {
   align-items: end;
   justify-content: space-between;
   gap: 24px;
-  min-height: 156px;
-  padding: 6px 0 28px;
+  min-height: 136px;
+  padding: 4px 0 24px;
 }
 
 .eyebrow {
   margin: 0 0 10px;
-  color: #9a4930;
+  color: #176b73;
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0;
@@ -92,7 +88,7 @@ h1 {
   max-width: 760px;
   margin: 0;
   color: #111719;
-  font-size: clamp(2.25rem, 3rem, 3.5rem);
+  font-size: clamp(2.15rem, 3rem, 3.35rem);
   line-height: 1;
   letter-spacing: 0;
 }
@@ -104,12 +100,12 @@ h1 {
   gap: 10px;
 }
 
-.stats span {
+.stats > span {
   min-width: 132px;
-  border: 1px solid #d8cebf;
+  border: 1px solid #d6e0e5;
   border-radius: 6px;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.72);
+  background: #fff;
   color: #425053;
 }
 
@@ -123,43 +119,48 @@ h1 {
 .workspace {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 340px;
-  gap: 20px;
+  gap: 16px;
   align-items: stretch;
 }
 
 .input-pane,
 .output-pane {
-  border: 1px solid #d8cebf;
+  border: 1px solid #d6e0e5;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 18px 48px rgba(29, 37, 40, 0.08);
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(28, 37, 41, 0.06);
 }
 
 .input-pane {
   display: flex;
-  min-height: 560px;
+  min-height: 420px;
   flex-direction: column;
+  gap: 16px;
   padding: 18px;
 }
 
 .output-pane {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
   padding: 18px;
 }
 
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: space-between;
-  margin-bottom: 16px;
+.upload-panel {
+  display: grid;
+  min-height: 210px;
+  align-content: space-between;
+  gap: 24px;
+  border: 1px dashed #9fb2bd;
+  border-radius: 8px;
+  padding: 24px;
+  background: #f9fbfc;
 }
 
 .file-picker {
   position: relative;
   display: inline-flex;
+  width: fit-content;
   min-height: 44px;
   align-items: center;
   justify-content: center;
@@ -176,6 +177,10 @@ h1 {
   background: #111719;
 }
 
+.file-picker:focus-within {
+  box-shadow: 0 0 0 3px rgba(23, 107, 115, 0.18);
+}
+
 .file-picker input {
   position: absolute;
   inset: 0;
@@ -184,44 +189,29 @@ h1 {
 }
 
 .field-label {
-  margin-bottom: 8px;
-  color: #425053;
-  font-size: 0.92rem;
+  margin: 0;
+  color: #111719;
+  font-size: 1.32rem;
   font-weight: 700;
 }
 
-textarea {
-  width: 100%;
-  min-height: 420px;
-  flex: 1;
-  resize: vertical;
-  border: 1px solid #c9bdac;
-  border-radius: 6px;
-  padding: 16px;
-  background: #fffdf9;
-  color: #111719;
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 0.98rem;
-  line-height: 1.55;
-  outline: none;
+.upload-hint {
+  max-width: 560px;
+  margin: 8px 0 0;
+  color: #52636a;
 }
 
 [hidden] {
   display: none !important;
 }
 
-textarea:focus {
-  border-color: #21695e;
-  box-shadow: 0 0 0 3px rgba(33, 105, 94, 0.16);
-}
-
 .file-summary {
   display: grid;
   gap: 6px;
-  border: 1px solid #c9bdac;
+  border: 1px solid #bfd0d8;
   border-radius: 6px;
   padding: 18px;
-  background: #fffdf9;
+  background: #eef7f8;
 }
 
 .file-summary__label {
@@ -240,13 +230,32 @@ textarea:focus {
   color: #425053;
 }
 
+.empty-state {
+  display: grid;
+  flex: 1;
+  min-height: 154px;
+  place-content: center;
+  gap: 6px;
+  border: 1px solid #d6e0e5;
+  border-radius: 8px;
+  padding: 24px;
+  background: #fff;
+  color: #52636a;
+  text-align: center;
+}
+
+.empty-state strong {
+  color: #111719;
+  font-size: 1.1rem;
+}
+
 .actions {
   display: grid;
   gap: 10px;
 }
 
 .report {
-  border-top: 1px solid #d8cebf;
+  border-top: 1px solid #d6e0e5;
   padding-top: 18px;
 }
 
@@ -271,11 +280,11 @@ h2 {
 
 .invalid-list li {
   overflow-wrap: anywhere;
-  border-left: 3px solid #b2583a;
+  border-left: 3px solid #b34f35;
   border-radius: 4px;
   padding: 8px 10px;
-  background: #fff3ed;
-  color: #713722;
+  background: #fff1eb;
+  color: #743521;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.9rem;
 }
@@ -310,6 +319,10 @@ h2 {
   }
 
   .input-pane {
-    min-height: 480px;
+    min-height: 360px;
+  }
+
+  .upload-panel {
+    min-height: 190px;
   }
 }
