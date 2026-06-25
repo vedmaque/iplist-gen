@@ -38,29 +38,50 @@ const outputPane = getElement<HTMLElement>("output-pane")
 const reportHeading = getElement<HTMLElement>("report-heading")
 
 const MAX_VISIBLE_INVALID_LINES = 25
+const BAT_FILENAME = "routes-keenetic.bat"
 
 let loadedFileText: string | null = null
+let hasFileReadError = false
 
 applyLocale(locale)
 
-fileInput.addEventListener("change", async () => {
+fileInput.addEventListener("change", () => {
+  void handleFileInputChange()
+})
+
+async function handleFileInputChange(): Promise<void> {
   const file = fileInput.files?.[0]
 
   if (!file) {
     return
   }
 
-  loadedFileText = await file.text()
+  try {
+    loadedFileText = await file.text()
+  } catch {
+    fileInput.value = ""
+    loadedFileText = null
+    hasFileReadError = true
+    fileSummary.hidden = true
+    fileName.textContent = ""
+    fileSize.textContent = ""
+    emptyState.hidden = false
+    updateReport()
+    return
+  }
+
+  hasFileReadError = false
   fileName.textContent = file.name
   fileSize.textContent = formatBytes(locale, file.size)
   fileSummary.hidden = false
   emptyState.hidden = true
   updateReport()
-})
+}
 
 clearButton.addEventListener("click", () => {
   fileInput.value = ""
   loadedFileText = null
+  hasFileReadError = false
   fileSummary.hidden = true
   fileName.textContent = ""
   fileSize.textContent = ""
@@ -71,7 +92,7 @@ clearButton.addEventListener("click", () => {
 
 downloadBatButton.addEventListener("click", () => {
   const { valid } = parseCidrList(getInputText())
-  downloadFile("routes.bat", toBatRoutes(valid), "application/x-bat")
+  downloadFile(BAT_FILENAME, toBatRoutes(valid), "application/x-bat")
 })
 
 downloadJsonButton.addEventListener("click", () => {
@@ -93,7 +114,9 @@ function updateReport(): void {
   downloadJsonButton.disabled = !canDownload
   invalidList.replaceChildren(...createInvalidLineItems(invalid))
 
-  if (!hasInput) {
+  if (hasFileReadError) {
+    statusText.textContent = strings.fileReadError
+  } else if (!hasInput) {
     statusText.textContent = strings.emptyStatus
   } else if (invalid.length === 0) {
     statusText.textContent = formatMessage(strings.readyStatus, {

@@ -43,6 +43,13 @@ describe("CIDR parsing", () => {
     expect(parseCidr("2.58.124.0/abc")).toBeNull()
     expect(parseCidr("2.58.124.256/24")).toBeNull()
   })
+
+  it("rejects csv-like rows because only one CIDR value per line is supported", () => {
+    const result = parseCidrList("network\n2.58.124.0/22,comment")
+
+    expect(result.valid).toEqual([])
+    expect(result.invalid).toEqual(["network", "2.58.124.0/22,comment"])
+  })
 })
 
 describe("netmask conversion", () => {
