@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IP List Converter</title>
+    <title>%i18n.documentTitle%</title>
     <link
       rel="icon"
       type="image/png"
@@ -21,19 +21,20 @@
     <link rel="manifest" href="%BASE_URL%site.webmanifest" />
   </head>
   <body>
-    <main id="app" class="shell">
+    <main id="app" class="shell" aria-label="%i18n.workspaceAriaLabel%">
       <section class="hero" aria-labelledby="page-title">
         <div>
-          <p id="app-brand" class="eyebrow"></p>
-          <h1 id="page-title"></h1>
+          <p id="app-brand" class="eyebrow">%i18n.brand%</p>
+          <h1 id="page-title">%i18n.pageTitle%</h1>
         </div>
         <div class="stats" aria-live="polite">
           <span
-            ><strong id="valid-count">0</strong> <span id="valid-label"></span
+            ><strong id="valid-count">0</strong>
+            <span id="valid-label">%i18n.statsValid%</span
           ></span>
           <span
             ><strong id="invalid-count">0</strong>
-            <span id="invalid-label"></span
+            <span id="invalid-label">%i18n.statsInvalid%</span
           ></span>
         </div>
       </section>
@@ -42,8 +43,8 @@
         <div class="input-pane">
           <div class="upload-panel">
             <div>
-              <p id="input-label" class="field-label"></p>
-              <p id="upload-hint" class="upload-hint"></p>
+              <p id="input-label" class="field-label">%i18n.inputLabel%</p>
+              <p id="upload-hint" class="upload-hint">%i18n.uploadHint%</p>
             </div>
 
             <label class="file-picker">
@@ -52,32 +53,42 @@
                 type="file"
                 accept=".txt,.list,text/plain"
               />
-              <span id="file-picker-label"></span>
+              <span id="file-picker-label">%i18n.filePicker%</span>
             </label>
           </div>
 
           <div id="file-summary" class="file-summary" hidden>
-            <span id="file-summary-label" class="file-summary__label"></span>
+            <span id="file-summary-label" class="file-summary__label"
+              >%i18n.fileSummaryLabel%</span
+            >
             <strong id="file-name"></strong>
             <span id="file-size"></span>
           </div>
           <div id="empty-state" class="empty-state">
-            <strong id="empty-state-title"></strong>
-            <span id="empty-state-text"></span>
+            <strong id="empty-state-title">%i18n.emptyStateTitle%</strong>
+            <span id="empty-state-text">%i18n.emptyStateText%</span>
           </div>
         </div>
 
-        <aside id="output-pane" class="output-pane">
+        <aside id="output-pane" class="output-pane" aria-label="%i18n.resultsAriaLabel%">
           <div class="actions">
-            <button id="download-bat" type="button"></button>
-            <button id="download-json" type="button"></button>
-            <button id="clear-button" class="secondary" type="button"></button>
+            <button id="download-bat" type="button">%i18n.downloadBat%</button>
+            <button id="download-json" type="button">
+              %i18n.downloadJson%
+            </button>
+            <button id="clear-button" class="secondary" type="button">
+              %i18n.clearButton%
+            </button>
           </div>
 
           <div class="report">
-            <h2 id="report-heading"></h2>
-            <p id="status-text"></p>
-            <ul id="invalid-list" class="invalid-list"></ul>
+            <h2 id="report-heading">%i18n.reportHeading%</h2>
+            <p id="status-text">%i18n.emptyStatus%</p>
+            <ul
+              id="invalid-list"
+              class="invalid-list"
+              aria-label="%i18n.invalidListAriaLabel%"
+            ></ul>
           </div>
         </aside>
       </section>
