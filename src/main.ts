@@ -38,7 +38,7 @@ const outputPane = getElement<HTMLElement>("output-pane")
 const reportHeading = getElement<HTMLElement>("report-heading")
 
 const MAX_VISIBLE_INVALID_LINES = 25
-const BAT_FILENAME = "routes-keenetic.bat"
+const BAT_FILENAME = "keenetic.bat"
 
 let loadedFileText: string | null = null
 let hasFileReadError = false

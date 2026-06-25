@@ -12,7 +12,7 @@
   "emptyStateTitle": "Файл не выбран",
   "emptyStateText": "Загрузите список CIDR, чтобы проверить строки и скачать результат.",
   "fileSummaryLabel": "Загружен файл",
-  "downloadBat": "Скачать routes-keenetic.bat",
+  "downloadBat": "Скачать keenetic.bat",
   "downloadJson": "Скачать amnezia.json",
   "resultsAriaLabel": "Результаты",
   "reportHeading": "Отчет",
