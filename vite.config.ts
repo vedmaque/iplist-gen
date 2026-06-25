@@ -40,15 +40,20 @@ function i18nHtmlPlugin(localePath: string): Plugin {
       handler(html) {
         const messages = loadLocaleMessages(localePath)
 
-        return html.replace(/%i18n\.([\w.]+)%/g, (placeholder, key: string) => {
-          const value = messages[key]
+        return html.replace(
+          /%i18n\.([\w.]+)%/g,
+          (_placeholder, key: string) => {
+            const value = messages[key]
 
-          if (typeof value !== "string") {
-            throw new Error(`Missing string value for HTML i18n key "${key}".`)
-          }
+            if (typeof value !== "string") {
+              throw new Error(
+                `Missing string value for HTML i18n key "${key}".`,
+              )
+            }
 
-          return escapeHtml(value)
-        })
+            return escapeHtml(value)
+          },
+        )
       },
     },
   }
