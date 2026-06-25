@@ -38,7 +38,10 @@ const outputPane = getElement<HTMLElement>("output-pane")
 const reportHeading = getElement<HTMLElement>("report-heading")
 
 const MAX_VISIBLE_INVALID_LINES = 25
-const BAT_FILENAME = "keenetic.bat"
+const BAT_FILENAME_PREFIX = "keenetic"
+const BAT_FILENAME_EXTENSION = "bat"
+const JSON_FILENAME_PREFIX = "amnezia"
+const JSON_FILENAME_EXTENSION = "json"
 
 let loadedFileText: string | null = null
 let hasFileReadError = false
@@ -92,12 +95,20 @@ clearButton.addEventListener("click", () => {
 
 downloadBatButton.addEventListener("click", () => {
   const { valid } = parseCidrList(getInputText())
-  downloadFile(BAT_FILENAME, toBatRoutes(valid), "application/x-bat")
+  downloadFile(
+    createTimestampedFilename(BAT_FILENAME_PREFIX, BAT_FILENAME_EXTENSION),
+    toBatRoutes(valid),
+    "application/x-bat",
+  )
 })
 
 downloadJsonButton.addEventListener("click", () => {
   const { valid } = parseCidrList(getInputText())
-  downloadFile("amnezia.json", toAmneziaJson(valid), "application/json")
+  downloadFile(
+    createTimestampedFilename(JSON_FILENAME_PREFIX, JSON_FILENAME_EXTENSION),
+    toAmneziaJson(valid),
+    "application/json",
+  )
 })
 
 updateReport()
@@ -202,6 +213,24 @@ function downloadFile(filename: string, content: string, type: string): void {
   link.click()
   link.remove()
   window.setTimeout(() => URL.revokeObjectURL(url), 0)
+}
+
+function createTimestampedFilename(
+  filenamePrefix: string,
+  filenameExtension: string,
+  date = new Date(),
+): string {
+  const year = date.getFullYear()
+  const month = formatDatePart(date.getMonth() + 1)
+  const day = formatDatePart(date.getDate())
+  const hours = formatDatePart(date.getHours())
+  const minutes = formatDatePart(date.getMinutes())
+
+  return `${filenamePrefix}_${year}-${month}-${day}_${hours}:${minutes}.${filenameExtension}`
+}
+
+function formatDatePart(value: number): string {
+  return String(value).padStart(2, "0")
 }
 
 function getElement<T extends HTMLElement>(id: string): T {
