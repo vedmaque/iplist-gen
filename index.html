@@ -1,24 +1,24 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IP List Converter</title>
+    <title></title>
   </head>
   <body>
     <main id="app" class="shell">
       <section class="hero" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">IP List Converter</p>
-          <h1 id="page-title">CIDR в BAT и Amnezia JSON</h1>
+          <p id="app-brand" class="eyebrow"></p>
+          <h1 id="page-title"></h1>
         </div>
         <div class="stats" aria-live="polite">
-          <span><strong id="valid-count">0</strong> валидных</span>
-          <span><strong id="invalid-count">0</strong> пропущено</span>
+          <span><strong id="valid-count">0</strong> <span id="valid-label"></span></span>
+          <span><strong id="invalid-count">0</strong> <span id="invalid-label"></span></span>
         </div>
       </section>
 
-      <section class="workspace" aria-label="Конвертер">
+      <section class="workspace">
         <div class="input-pane">
           <div class="toolbar">
             <label class="file-picker">
@@ -27,16 +27,14 @@
                 type="file"
                 accept=".txt,.list,.csv,text/plain"
               />
-              <span>Загрузить файл</span>
+              <span id="file-picker-label"></span>
             </label>
-            <button id="clear-button" class="secondary" type="button">
-              Очистить
-            </button>
+            <button id="clear-button" class="secondary" type="button"></button>
           </div>
 
-          <label class="field-label" for="cidr-input">Список CIDR</label>
+          <label id="input-label" class="field-label" for="cidr-input"></label>
           <div id="file-summary" class="file-summary" hidden>
-            <span class="file-summary__label">Загружен файл</span>
+            <span id="file-summary-label" class="file-summary__label"></span>
             <strong id="file-name"></strong>
             <span id="file-size"></span>
           </div>
@@ -47,24 +45,16 @@
           ></textarea>
         </div>
 
-        <aside class="output-pane" aria-label="Результаты">
+        <aside id="output-pane" class="output-pane">
           <div class="actions">
-            <button id="download-bat" type="button">
-              Скачать routes-keenetic.bat
-            </button>
-            <button id="download-json" type="button">
-              Скачать amnezia.json
-            </button>
+            <button id="download-bat" type="button"></button>
+            <button id="download-json" type="button"></button>
           </div>
 
           <div class="report">
-            <h2>Отчет</h2>
-            <p id="status-text">Добавьте список CIDR для конвертации.</p>
-            <ul
-              id="invalid-list"
-              class="invalid-list"
-              aria-label="Пропущенные строки"
-            ></ul>
+            <h2 id="report-heading"></h2>
+            <p id="status-text"></p>
+            <ul id="invalid-list" class="invalid-list"></ul>
           </div>
         </aside>
       </section>

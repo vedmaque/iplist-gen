@@ -1,0 +1,28 @@
+{
+  "documentTitle": "IP List Converter",
+  "brand": "IP List Converter",
+  "pageTitle": "CIDR в BAT и Amnezia JSON",
+  "statsValid": "валидных",
+  "statsInvalid": "пропущено",
+  "workspaceAriaLabel": "Конвертер",
+  "filePicker": "Загрузить файл",
+  "clearButton": "Очистить",
+  "inputLabel": "Список CIDR",
+  "fileSummaryLabel": "Загружен файл",
+  "downloadBat": "Скачать routes-keenetic.bat",
+  "downloadJson": "Скачать amnezia.json",
+  "resultsAriaLabel": "Результаты",
+  "reportHeading": "Отчет",
+  "invalidListAriaLabel": "Пропущенные строки",
+  "emptyStatus": "Добавьте список CIDR для конвертации.",
+  "readyStatus": "Готово к скачиванию: {validLineCount}.",
+  "partialStatus": "Будет сконвертировано {validLineCount}, пропущено {invalidLineCount}.",
+  "moreInvalidLines": "И еще {lineCount}.",
+  "byteUnits": ["Б", "КБ", "МБ", "ГБ"],
+  "lineForms": {
+    "one": "строка",
+    "few": "строки",
+    "many": "строк",
+    "other": "строки"
+  }
+}

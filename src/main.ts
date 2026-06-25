@@ -1,6 +1,19 @@
 import "./style.css"
 import { parseCidrList, toBatRoutes, toAmneziaJson } from "./converter"
+import {
+  detectLocale,
+  formatBytes,
+  formatLineCount,
+  getLocaleStrings,
+  type Locale,
+} from "./i18n/index"
 
+const locale = detectLocale()
+const strings = getLocaleStrings(locale)
+
+const app = getElement<HTMLElement>("app")
+const pageTitle = getElement<HTMLElement>("page-title")
+const brand = getElement<HTMLElement>("app-brand")
 const fileInput = getElement<HTMLInputElement>("file-input")
 const textInput = getElement<HTMLTextAreaElement>("cidr-input")
 const clearButton = getElement<HTMLButtonElement>("clear-button")
@@ -8,15 +21,24 @@ const downloadBatButton = getElement<HTMLButtonElement>("download-bat")
 const downloadJsonButton = getElement<HTMLButtonElement>("download-json")
 const validCount = getElement<HTMLElement>("valid-count")
 const invalidCount = getElement<HTMLElement>("invalid-count")
+const validLabel = getElement<HTMLElement>("valid-label")
+const invalidLabel = getElement<HTMLElement>("invalid-label")
 const statusText = getElement<HTMLElement>("status-text")
 const invalidList = getElement<HTMLUListElement>("invalid-list")
 const fileSummary = getElement<HTMLElement>("file-summary")
+const filePickerLabel = getElement<HTMLElement>("file-picker-label")
+const inputLabel = getElement<HTMLElement>("input-label")
+const fileSummaryLabel = getElement<HTMLElement>("file-summary-label")
 const fileName = getElement<HTMLElement>("file-name")
 const fileSize = getElement<HTMLElement>("file-size")
+const outputPane = getElement<HTMLElement>("output-pane")
+const reportHeading = getElement<HTMLElement>("report-heading")
 
 const MAX_VISIBLE_INVALID_LINES = 25
 
 let loadedFileText: string | null = null
+
+applyLocale(locale)
 
 fileInput.addEventListener("change", async () => {
   const file = fileInput.files?.[0]
@@ -28,7 +50,7 @@ fileInput.addEventListener("change", async () => {
   loadedFileText = await file.text()
   textInput.value = ""
   fileName.textContent = file.name
-  fileSize.textContent = formatBytes(file.size)
+  fileSize.textContent = formatBytes(locale, file.size)
   fileSummary.hidden = false
   textInput.hidden = true
   updateReport()
@@ -76,16 +98,16 @@ function updateReport(): void {
   invalidList.replaceChildren(...createInvalidLineItems(invalid))
 
   if (!hasInput) {
-    statusText.textContent = "Добавьте список CIDR для конвертации."
+    statusText.textContent = strings.emptyStatus
   } else if (invalid.length === 0) {
-    statusText.textContent = `Готово к скачиванию: ${formatCount(valid.length, "строка", "строки", "строк")}.`
+    statusText.textContent = formatMessage(strings.readyStatus, {
+      validLineCount: formatLineCount(locale, valid.length),
+    })
   } else {
-    statusText.textContent = `Будет сконвертировано ${formatCount(
-      valid.length,
-      "строка",
-      "строки",
-      "строк",
-    )}, пропущено ${formatCount(invalid.length, "строка", "строки", "строк")}.`
+    statusText.textContent = formatMessage(strings.partialStatus, {
+      validLineCount: formatLineCount(locale, valid.length),
+      invalidLineCount: formatLineCount(locale, invalid.length),
+    })
   }
 }
 
@@ -102,7 +124,9 @@ function createInvalidLineItems(invalid: string[]): HTMLLIElement[] {
   if (hiddenCount > 0) {
     visibleLines.push(
       createInvalidLineItem(
-        `И еще ${formatCount(hiddenCount, "строка", "строки", "строк")}.`,
+        formatMessage(strings.moreInvalidLines, {
+          lineCount: formatLineCount(locale, hiddenCount),
+        }),
       ),
     )
   }
@@ -110,10 +134,38 @@ function createInvalidLineItems(invalid: string[]): HTMLLIElement[] {
   return visibleLines
 }
 
+function applyLocale(locale: Locale): void {
+  document.documentElement.lang = locale
+  document.title = strings.documentTitle
+  app.setAttribute("aria-label", strings.workspaceAriaLabel)
+  brand.textContent = strings.brand
+  pageTitle.textContent = strings.pageTitle
+  validLabel.textContent = strings.statsValid
+  invalidLabel.textContent = strings.statsInvalid
+  filePickerLabel.textContent = strings.filePicker
+  clearButton.textContent = strings.clearButton
+  inputLabel.textContent = strings.inputLabel
+  fileSummaryLabel.textContent = strings.fileSummaryLabel
+  downloadBatButton.textContent = strings.downloadBat
+  downloadJsonButton.textContent = strings.downloadJson
+  outputPane.setAttribute("aria-label", strings.resultsAriaLabel)
+  reportHeading.textContent = strings.reportHeading
+  invalidList.setAttribute("aria-label", strings.invalidListAriaLabel)
+}
+
 function createInvalidLineItem(value: string): HTMLLIElement {
   const item = document.createElement("li")
   item.textContent = value
   return item
+}
+
+function formatMessage(
+  template: string,
+  values: Record<string, string>,
+): string {
+  return template.replace(/\{(\w+)}/g, (placeholder, key: string) => {
+    return values[key] ?? placeholder
+  })
 }
 
 function downloadFile(filename: string, content: string, type: string): void {
@@ -138,36 +190,4 @@ function getElement<T extends HTMLElement>(id: string): T {
   }
 
   return element as T
-}
-
-function formatBytes(bytes: number): string {
-  const units = ["Б", "КБ", "МБ", "ГБ"]
-  let value = bytes
-  let unitIndex = 0
-
-  while (value >= 1024 && unitIndex < units.length - 1) {
-    value /= 1024
-    unitIndex += 1
-  }
-
-  const precision = unitIndex === 0 || value >= 10 ? 0 : 1
-  return `${value.toFixed(precision)} ${units[unitIndex]}`
-}
-
-function formatCount(
-  count: number,
-  one: string,
-  few: string,
-  many: string,
-): string {
-  const mod10 = count % 10
-  const mod100 = count % 100
-  const word =
-    mod10 === 1 && mod100 !== 11
-      ? one
-      : mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)
-        ? few
-        : many
-
-  return `${count} ${word}`
 }
