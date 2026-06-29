@@ -36,6 +36,10 @@ const emptyStateTitle = getElement<HTMLElement>("empty-state-title")
 const emptyStateText = getElement<HTMLElement>("empty-state-text")
 const outputPane = getElement<HTMLElement>("output-pane")
 const reportHeading = getElement<HTMLElement>("report-heading")
+const sources = getElement<HTMLElement>("sources")
+const sourcesLabel = getElement<HTMLElement>("sources-label")
+const sourceStandard = getElement<HTMLAnchorElement>("source-standard")
+const sourceAggregated = getElement<HTMLAnchorElement>("source-aggregated")
 
 const MAX_VISIBLE_INVALID_LINES = 25
 const BAT_FILENAME_PREFIX = "keenetic"
@@ -184,6 +188,10 @@ function applyLocale(locale: Locale): void {
   outputPane.setAttribute("aria-label", strings.resultsAriaLabel)
   reportHeading.textContent = strings.reportHeading
   invalidList.setAttribute("aria-label", strings.invalidListAriaLabel)
+  sources.setAttribute("aria-label", strings.sourcesLabel)
+  sourcesLabel.textContent = `${strings.sourcesLabel}:`
+  sourceStandard.textContent = strings.sourceStandard
+  sourceAggregated.textContent = strings.sourceAggregated
 }
 
 function createInvalidLineItem(value: string): HTMLLIElement {

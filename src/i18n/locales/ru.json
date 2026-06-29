@@ -22,6 +22,9 @@
   "readyStatus": "Готово к скачиванию: {validLineCount}.",
   "partialStatus": "Будет сконвертировано {validLineCount}, пропущено {invalidLineCount}.",
   "moreInvalidLines": "И еще {lineCount}.",
+  "sourcesLabel": "Источники CIDR",
+  "sourceStandard": "обычный список",
+  "sourceAggregated": "агрегированный список",
   "byteUnits": ["Б", "КБ", "МБ", "ГБ"],
   "lineForms": {
     "one": "строка",

@@ -22,6 +22,9 @@
   "readyStatus": "Ready to download: {validLineCount}.",
   "partialStatus": "Will convert {validLineCount}, skip {invalidLineCount}.",
   "moreInvalidLines": "And {lineCount} more.",
+  "sourcesLabel": "CIDR sources",
+  "sourceStandard": "standard list",
+  "sourceAggregated": "aggregated list",
   "byteUnits": ["B", "KB", "MB", "GB"],
   "lineForms": {
     "one": "line",
